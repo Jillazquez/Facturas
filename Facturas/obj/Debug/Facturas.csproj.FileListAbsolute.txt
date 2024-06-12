@@ -1,0 +1,14 @@
+C:\Users\juanm\Documents\C#\Facturas\Facturas\bin\Debug\Facturas.exe.config
+C:\Users\juanm\Documents\C#\Facturas\Facturas\bin\Debug\Facturas.exe
+C:\Users\juanm\Documents\C#\Facturas\Facturas\bin\Debug\Facturas.pdb
+C:\Users\juanm\Documents\C#\Facturas\Facturas\obj\Debug\Facturas.csproj.AssemblyReference.cache
+C:\Users\juanm\Documents\C#\Facturas\Facturas\obj\Debug\Facturas.Properties.Resources.resources
+C:\Users\juanm\Documents\C#\Facturas\Facturas\obj\Debug\Facturas.csproj.GenerateResource.cache
+C:\Users\juanm\Documents\C#\Facturas\Facturas\obj\Debug\Facturas.csproj.CoreCompileInputs.cache
+C:\Users\juanm\Documents\C#\Facturas\Facturas\obj\Debug\Facturas.exe
+C:\Users\juanm\Documents\C#\Facturas\Facturas\obj\Debug\Facturas.pdb
+C:\Users\juanm\Documents\C#\Facturas\Facturas\obj\Debug\Facturas.Form1.resources
+C:\Users\juanm\Documents\C#\Facturas\Facturas\bin\Debug\BouncyCastle.Crypto.dll
+C:\Users\juanm\Documents\C#\Facturas\Facturas\bin\Debug\itextsharp.dll
+C:\Users\juanm\Documents\C#\Facturas\Facturas\bin\Debug\itextsharp.xml
+C:\Users\juanm\Documents\C#\Facturas\Facturas\obj\Debug\Facturas.csproj.Up2Date
