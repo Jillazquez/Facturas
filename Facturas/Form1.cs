@@ -108,7 +108,8 @@ namespace Facturas
         {
             // Crear un nuevo documento PDF
             Document doc = new Document();
-            if(lista.SelectedRows.Count < 1)
+            string fileName = "";
+            if (lista.SelectedRows.Count < 1)
             {
                 MessageBox.Show($"Selecciona al menos una fila para generar la factura", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
@@ -116,56 +117,67 @@ namespace Facturas
             {
                 try
                 {
-                    // Definir la ruta donde se guardará el PDF
-                    string dia = DateTime.Now.ToString("dd-MM-yyyy");
-                    string pdfFilePath = "factura" + dia + ".pdf";
-
-                    // Crear un objeto PdfWriter para escribir en el PDF
-                    PdfWriter.GetInstance(doc, new FileStream(pdfFilePath, FileMode.Create));
-
-                    // Abrir el documento para escribir contenido
-                    doc.Open();
-
-                    if (File.Exists(iconoEmpresa))
+                    SaveFileDialog saveFileDialog = new SaveFileDialog
                     {
-                        Image logo = Image.GetInstance(iconoEmpresa);
-                        logo.ScaleAbsolute(100f, 100f); // Ajustar el tamaño del logo según sea necesario
-                        logo.Alignment = Element.ALIGN_LEFT;
-                        doc.Add(logo);
+                        Filter = "Archivos PDF|*.pdf",
+                        Title = "Guardar archivo PDF"
+                    };                  
+                    DialogResult = saveFileDialog.ShowDialog();
+                    if (DialogResult == DialogResult.OK)
+                    {
+                        fileName = saveFileDialog.FileName;
+                        string pathFile = Path.GetDirectoryName(fileName);
+                        // Definir la ruta donde se guardará el PDF
+
+
+                        // Crear un objeto PdfWriter para escribir en el PDF
+                        PdfWriter.GetInstance(doc, new FileStream(fileName, FileMode.Create));
+
+                        // Abrir el documento para escribir contenido
+                        doc.Open();
+
+                        if (File.Exists(iconoEmpresa))
+                        {
+                            Image logo = Image.GetInstance(iconoEmpresa);
+                            logo.ScaleAbsolute(100f, 100f); // Ajustar el tamaño del logo según sea necesario
+                            logo.Alignment = Element.ALIGN_LEFT;
+                            doc.Add(logo);
+                        }
+
+                        // Agregar un título al documento
+                        Paragraph title = new Paragraph("Factura");
+                        title.Alignment = Element.ALIGN_CENTER;
+                        doc.Add(title);
+
+                        /// Crear una tabla con el número de columnas adecuado
+                        PdfPTable table = new PdfPTable(4); // 4 columnas: Nombre, Precio Unitario, Cantidad, Total
+                        table.WidthPercentage = 100;
+
+                        // Agregar los encabezados de la tabla
+                        table.AddCell("Nombre");
+                        table.AddCell("Precio Unitario");
+                        table.AddCell("Cantidad");
+                        table.AddCell("Total");
+
+                        // Agregar los datos de las filas seleccionadas a la tabla
+                        foreach (DataGridViewRow row in lista.SelectedRows)
+                        {
+                            table.AddCell(row.Cells["Producto"].Value.ToString());
+                            table.AddCell(row.Cells["PrecioUnitario"].Value.ToString());
+                            table.AddCell(row.Cells["Cantidad"].Value.ToString());
+                            table.AddCell(row.Cells["Total"].Value.ToString());
+                        }
+
+                        // Agregar la tabla al documento
+                        doc.Add(table);
+
+                        // Cerrar el documento
+                        doc.Close();
+
+                        // Mostrar un mensaje de éxito
+                        MessageBox.Show($"PDF generado exitosamente: {fileName}", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
 
-                    // Agregar un título al documento
-                    Paragraph title = new Paragraph("Factura");
-                    title.Alignment = Element.ALIGN_CENTER;
-                    doc.Add(title);
-
-                    /// Crear una tabla con el número de columnas adecuado
-                    PdfPTable table = new PdfPTable(4); // 4 columnas: Nombre, Precio Unitario, Cantidad, Total
-                    table.WidthPercentage = 100;
-
-                    // Agregar los encabezados de la tabla
-                    table.AddCell("Nombre");
-                    table.AddCell("Precio Unitario");
-                    table.AddCell("Cantidad");
-                    table.AddCell("Total");
-
-                    // Agregar los datos de las filas seleccionadas a la tabla
-                    foreach (DataGridViewRow row in lista.SelectedRows)
-                    {
-                        table.AddCell(row.Cells["Producto"].Value.ToString());
-                        table.AddCell(row.Cells["PrecioUnitario"].Value.ToString());
-                        table.AddCell(row.Cells["Cantidad"].Value.ToString());
-                        table.AddCell(row.Cells["Total"].Value.ToString());
-                    }
-
-                    // Agregar la tabla al documento
-                    doc.Add(table);
-
-                    // Cerrar el documento
-                    doc.Close();
-
-                    // Mostrar un mensaje de éxito
-                    MessageBox.Show($"PDF generado exitosamente: {pdfFilePath}", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 catch (Exception ex)
                 {
@@ -192,6 +204,11 @@ namespace Facturas
             }   
         }
 
+        private void deleteRows()
+        {
+            lista.Rows.Clear();
+        }
+
 
         private void ClearInputs()
         {
@@ -202,6 +219,7 @@ namespace Facturas
 
         private void btnSave_Click_1(object sender, EventArgs e)
         {
+            deleteRows();
             LoadFacturas();
         }
 
@@ -218,6 +236,26 @@ namespace Facturas
         private void button5_Click(object sender, EventArgs e)
         {
             borrarLineas();
+        }
+
+        private void buttonFile_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog ofd = new OpenFileDialog();
+            DialogResult result = ofd.ShowDialog();
+            if(result == DialogResult.OK)
+            {
+                string file = ofd.FileName;
+                string path = Path.GetDirectoryName(file);
+                csvFilePath = Path.Combine(path, file);
+                try
+                {
+                    string text = File.ReadAllText(file);
+                }
+                catch (IOException)
+                {
+
+                }
+            }
         }
     }
 }

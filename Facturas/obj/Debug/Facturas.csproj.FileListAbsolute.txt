@@ -12,3 +12,6 @@ C:\Users\juanm\Documents\C#\Facturas\Facturas\bin\Debug\BouncyCastle.Crypto.dll
 C:\Users\juanm\Documents\C#\Facturas\Facturas\bin\Debug\itextsharp.dll
 C:\Users\juanm\Documents\C#\Facturas\Facturas\bin\Debug\itextsharp.xml
 C:\Users\juanm\Documents\C#\Facturas\Facturas\obj\Debug\Facturas.csproj.Up2Date
+C:\Users\juanm\Documents\C#\Facturas\Facturas\bin\Debug\MaterialSkin.dll
+C:\Users\juanm\Documents\C#\Facturas\Facturas\bin\Debug\ReaLTaiizor.dll
+C:\Users\juanm\Documents\C#\Facturas\Facturas\bin\Debug\ReaLTaiizor.xml
